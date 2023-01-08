@@ -132,14 +132,6 @@ it('acessa a pagina da politica de privacidade removendo o target e entao abre n
 
  cy.contains('Talking About Testing').should('be.visible')
 })
-it('acessa a pagina da politica de privacidade removendo o target e entao abre na mesma tela', function(){
-  cy.get('#privacy a')
-  .invoke('removeAttr','target')
-  .click()
-
- cy.contains('Talking AAAbout Testing').should('be.visible')
-})
-
 
 })
 
