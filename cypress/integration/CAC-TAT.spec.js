@@ -125,14 +125,14 @@ it('verifica que a politica de privacidade abre em outra aba sem necessidade de 
   
 })
 
-it.only('acessa a pagina da politica de privacidade removendo o target e entao abre na mesma tela', function(){
+it('acessa a pagina da politica de privacidade removendo o target e entao abre na mesma tela', function(){
   cy.get('#privacy a')
   .invoke('removeAttr','target')
   .click()
 
  cy.contains('Talking About Testing').should('be.visible')
 })
-it.only('acessa a pagina da politica de privacidade removendo o target e entao abre na mesma tela', function(){
+it('acessa a pagina da politica de privacidade removendo o target e entao abre na mesma tela', function(){
   cy.get('#privacy a')
   .invoke('removeAttr','target')
   .click()
