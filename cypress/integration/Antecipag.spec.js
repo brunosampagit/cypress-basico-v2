@@ -1,29 +1,147 @@
 /// <reference types="Cypress" />
 
-describe('Central de Atendimento ao Cliente TAT', function() {
+describe('Acesso ao Antecipag', function() {
   const tres_miles_segundos = 3000
   beforeEach(function(){
-      cy.visit('./src/index.html')
+      cy.visit('https://qa-app.antecipag.com.br/')
   })
-  it('verifica o título da aplicação', function() {
-      cy.title().should('be.equal','Central de Atendimento ao Cliente TAT')
+  it('verifica o título da plataforma', function() {
+      cy.title().should('be.equal','Antecipag | Entrar')
     })
-  it('preencha os campos obrigatorios', function(){
-      const longtext = 'TESTE, TESTE, TESTE, TESTE, TESTE, TESTE, TESTE, TESTE, TESTE, TESTE' 
+
+it('cadastro financiador sucesso', function(){
+
+  cy.clock()
+  
+  cy.get('#email').type('admin@admin.com')
+  cy.get('#password').type('Finnet10@')
+  cy.get('.MuiButton-root').click()
+  cy.contains('Lista de usuários na plataforma Antecipag').should('be.visible')
+  cy.get('[data-testid="MenuIcon"] > path').click()
+  cy.get('[href="/financiadores"]').click()
+  cy.tick(tres_miles_segundos)
+  cy.contains('Financiador').should('be.visible')
+  cy.get('[style="display: flex; justify-content: space-between;"] > :nth-child(2) > .MuiButton-root').click()
+  cy.contains('Dados do Financiador').should('be.visible')
+  cy.get('#rcc-confirm-button').click()
+  cy.get('input[id="financier.document"]').type('77094011000102')
+  cy.get('input[id="financier.name"]').type('Testeqabvnquinta')
+  cy.get('input[id="minimumMonthlyBilling"]').type('100000000')
+  cy.get('input[id="modules.invoice.successFee"]').type('0,123')
+  cy.get('input[id="modules.card.successFee"]').type('0,456')
+  cy.get('input[id="time.initial"]').type('1000')
+  cy.get('input[id="time.final"]').type('1100')
+  cy.get('[data-testid="AddCircleIcon"]')
+    .should('not.have.value')
+    .selectFile('./cypress/fixtures/Institucional_Finnet.pdf', { action:'drag-drop'})
+    cy.contains('Institucional_Finnet.pdf').should('be.visible')
+    //cy.get('.MuiButton-root').click()
+    
+})
+it('cadastro financiador - Nome em branco', function(){
+
+  cy.clock()
+  
+  cy.get('#email').type('admin@admin.com')
+  cy.get('#password').type('Finnet10@')
+  cy.get('.MuiButton-root').click()
+  cy.contains('Lista de usuários na plataforma Antecipag').should('be.visible')
+  cy.get('[data-testid="MenuIcon"] > path').click()
+  cy.get('[href="/financiadores"]').click()
+  cy.tick(tres_miles_segundos)
+  cy.contains('Financiador').should('be.visible')
+  cy.get('[style="display: flex; justify-content: space-between;"] > :nth-child(2) > .MuiButton-root').click()
+  cy.contains('Dados do Financiador').should('be.visible')
+  cy.get('#rcc-confirm-button').click()
+  cy.get('input[id="financier.document"]').type('77094011000102')
+  //cy.get('input[id="financier.name"]').type('Testeqabvnquinta')
+  cy.get('input[id="minimumMonthlyBilling"]').type('100000000')
+  cy.get('input[id="modules.invoice.successFee"]').type('0,123')
+  cy.get('input[id="modules.card.successFee"]').type('0,456')
+  cy.get('input[id="time.initial"]').type('1000')
+  cy.get('input[id="time.final"]').type('1100')
+  cy.get('[data-testid="AddCircleIcon"]')
+    .should('not.have.value')
+    .selectFile('./cypress/fixtures/Institucional_Finnet.pdf', { action:'drag-drop'})
+    cy.contains('Institucional_Finnet.pdf').should('be.visible')
+    //cy.get('.MuiButton-root').click()
+  
+  })
+
+  it('cadastro financiador - Nome 2 caracteres', function(){
+
+    cy.clock()
+    
+    cy.get('#email').type('admin@admin.com')
+    cy.get('#password').type('Finnet10@')
+    cy.get('.MuiButton-root').click()
+    cy.get('[data-testid="MenuIcon"] > path').click()
+    cy.get('[href="/financiadores"]').click()
+    cy.tick(tres_miles_segundos)
+    cy.get('[style="display: flex; justify-content: space-between;"] > :nth-child(2) > .MuiButton-root').click()
+    cy.get('#rcc-confirm-button').click()
+    cy.get('input[id="financier.document"]').type('77094011000102')
+    cy.get('input[id="financier.name"]').type('Te')
+    cy.get('input[id="minimumMonthlyBilling"]').type('100000000')
+    cy.get('input[id="modules.invoice.successFee"]').type('0,123')
+    cy.get('input[id="modules.card.successFee"]').type('0,456')
+    cy.get('input[id="time.initial"]').type('1000')
+    cy.get('input[id="time.final"]').type('1100')
+    cy.get('[data-testid="AddCircleIcon"]')
+      .should('not.have.value')
+      .selectFile('./cypress/fixtures/Institucional_Finnet.pdf', { action:'drag-drop'})
+
+      cy.contains('Razão Social deve conter pelo menos 3 caracteres.').should('be.visible')
+      //cy.get('.MuiButton-root').click()
+
+    })
+
+    it('cadastro financiador - Nome 51 caracteres', function(){
+
+      cy.clock()
+      
+      cy.get('#email').type('admin@admin.com')
+      cy.get('#password').type('Finnet10@')
+      cy.get('.MuiButton-root').click()
+      cy.get('[data-testid="MenuIcon"] > path').click()
+      cy.get('[href="/financiadores"]').click()
+      cy.tick(tres_miles_segundos)
+      cy.get('[style="display: flex; justify-content: space-between;"] > :nth-child(2) > .MuiButton-root').click()
+      cy.get('#rcc-confirm-button').click()
+      cy.get('input[id="financier.document"]').type('77094011000102')
+      cy.get('input[id="financier.name"]').type('TesteTesteTesteTesteTesteTesteTesteTesteTeste Teste')
+      cy.get('input[id="minimumMonthlyBilling"]').type('100000000')
+      cy.get('input[id="modules.invoice.successFee"]').type('0,123')
+      cy.get('input[id="modules.card.successFee"]').type('0,456')
+      cy.get('input[id="time.initial"]').type('1000')
+      cy.get('input[id="time.final"]').type('1100')
+      cy.get('[data-testid="AddCircleIcon"]')
+        .should('not.have.value')
+        .selectFile('./cypress/fixtures/Institucional_Finnet.pdf', { action:'drag-drop'})
+  
+        cy.contains('Razão Social pode conter no máximo 50 caracteres.').should('be.visible')
+        //cy.get('.MuiButton-root').click()
+  
+      })
+})
+
+
+
+  /*abaixo temos alguns exemplos de preenchimento de cadastro.
+
+    it('preencha os campos obrigatorios', function(){
+      
       cy.clock()
       
       cy.get('#firstName').type('Bruno',{delay: 0})
       cy.get('#lastName').type('Nascimento',{delay: 0})
       cy.get('#email').type('verissimo18_sampa@hotmail.com',{delay: 0})
-      cy.get('#open-text-area').type(longtext,{delay: 0})
       cy.get('button[type="submit"]').click()
-
       cy.get('.success').should('be.visible')
-
       cy.tick(tres_miles_segundos)
-
       cy.get('.success').should('not.be.visible')
   })  
+
   it('email com formatacao errada', function(){
 
     cy.clock()
@@ -90,7 +208,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   /*it('enviar formulario com comando customizado', function(){
     cy.preenchaoscamposeenvia()
     cy.get('.success').should('be.visible')
-  })*/
+  })
   it('selecione um produto por seu texto', function(){
     cy.get('#product').select('Cursos')
     .should('have.value','cursos')
@@ -206,15 +324,7 @@ it('encontra o gato escondido', function(){
       .invoke('text', 'CAT TAT')
     cy.get('#subtitle')
       .invoke('text', 'Eu amo gatos')
-})
+})*/
 
 
-
-
-
-
-
-
-
-})
 
