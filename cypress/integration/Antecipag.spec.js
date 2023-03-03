@@ -35,7 +35,7 @@ it('cadastro financiador sucesso', function(){
     .should('not.have.value')
     .selectFile('./cypress/fixtures/Institucional_Finnet.pdf', { action:'drag-drop'})
     cy.contains('Institucional_Finnet.pdf').should('be.visible')
-    //cy.get('.MuiButton-root').click()
+    cy.get('.MuiButton-root').click()
     
 })
 it('cadastro financiador - Nome em branco', function(){
